@@ -37,7 +37,7 @@ def seleccionar_letras(letras_a_procesar:list):
     
     return(letras_participantes)
 
-def conseguir_palabra(definiciones, letra_a_procesar):
+def conseguir_palabra(definiciones:dict, letra_a_procesar:str):
     empiezan_con_letra=[]
 
     for palabra in definiciones.keys():
@@ -58,9 +58,9 @@ def crear_rosco (definiciones:dict, letras_participantes:list):
     return (rosco_ordenado)
         
 def main():
-    prueba={
+    prueba={"a":{
             "avion":"cosa que vuela",
-            "azul":"color del mar",
+            "azul":"color del mar"},
             "boludo":"estudiante de fiuba",
             "barco":"transporte que se usa para navegar",
             "casa":"hogar dulce hogar",
@@ -92,7 +92,7 @@ def main():
             "yogurt":"alimento lacteo que se obtiene por fermentacion",
             "zebra":"importante jugueteria de Buenos Aires"}
 
-    letras_a_procesar=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'ñ', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w',
+    letras_a_procesar=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w',
                         'x', 'y', 'z']
     
     for j in range(10):
