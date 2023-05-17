@@ -1548,16 +1548,30 @@ def construction_dictionary_words(list_of_definitions): # NOTE distingue acentos
             letter = word[0].lower() # Agarramos el primer caracter de la palabra para convertirlo en mayuscula 
             letter_standard = accents.get(letter, letter)
             if letter_standard not in dictionary: # Comprueba si esa letter no está incluida en el diccionario
-                dictionary[letter_standard] = [] # Lista vacia para adjuntar palabras con esa letra
-            dictionary[letter_standard].append({'word': word, 'definition': definition}) # Incluye word y definition a dictionary segun la letra
+                dictionary[letter_standard] = {} # Lista vacia para adjuntar palabras con esa letra
+            #dictionary[letter_standard].append((word,definition)) # Incluye word y definition a dictionary segun la letra
+            dictionary[letter_standard][word] = definition
     return dictionary # Devuelve el dictionary de palabras generado
 
-list_of_definitions = obtener_lista_definiciones() # Adquiere la list_of_definitions
-dictionary_words = construction_dictionary_words(list_of_definitions) # Construye el dictionary de words a partir de la list_of_definitions
 
-for letter in sorted(dictionary_words.keys()): # Itera sobre las letters del dictionary ordenadas alfabeticamente 
-    words = sorted([w['word'] for w in dictionary_words[letter]])    
-    print(f'Letter {letter.upper()}: {len(words)} words') # En consola, ejemplo: Letter E: 1 words. letter y la cantidad de words que empiezan con la misma 
+# ESTA FUNCION TIENE QUE REACOMODARSE PARA MOSTRAR CORRECTAMENTE EL NUEVO DICCIONARIO 
 
-total_words = sum([len(dictionary_words[letter]) for letter in dictionary_words])
-print(f'Total words in the dictionary: {total_words}') # Muestra el total de words en dictionary sumando la cantidad de words por letter
+# def mostrar_diccionario(dictionary_words:dict):
+#     for letter in sorted(dictionary_words.keys()): # Itera sobre las letters del dictionary ordenadas alfabeticamente 
+#         words = sorted([w['word'] for w in dictionary_words[letter]])    
+#         print(f'Letter {letter.upper()}: {len(words)} words') # En consola, ejemplo: Letter E: 1 words. letter y la cantidad de words que empiezan con la misma 
+#     total_words = sum([len(dictionary_words[letter]) for letter in dictionary_words])
+#     print(f'Total words in the dictionary: {total_words}') # Muestra el total de words en dictionary sumando la cantidad de words por letter
+
+def main():
+    list_of_definitions = obtener_lista_definiciones() # Adquiere la list_of_definitions
+    dictionary_words = construction_dictionary_words(list_of_definitions) # Construye el dictionary de words a partir de la list_of_definitions
+    #mostrar_diccionario(dictionary_words)
+    
+    print(dictionary_words["l"])
+main()
+
+
+
+
+
