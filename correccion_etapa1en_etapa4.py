@@ -1,17 +1,16 @@
-# lista_palabras_ordenadas= ['arroz', 'boludo','careta','pañal']
-# letras_participantes=['a','b','c','p']
-# prueba 
 import random
 from datos import obtener_lista_definiciones
 
 #FUNCIONES ETAPA 2
 def construction_dictionary_words(list_of_definitions): # NOTE distingue acentos y la letra ñ
     ''' Minimo de 5 letras por palabra de lo contrario no selecciona, se muestra por consola el total de palabras que hay por cada letra, 
-    y el total que hay en el diccionario.'''
+    y el total que hay en el diccionario.
+    Autor: Matias'''
     dictionary = {} # Para guardar las palabras
     accents = {'á': 'a', 'é': 'e', 'í': 'i', 'ó': 'o', 'ú': 'u', 'ñ': 'n'}
     ''' El bucle itera y desempaqueta cada elemento de list_of_definitions. 
-    En las variables, word ocupara el valor "palabra1" y definition el valor "definicion1" '''
+    En las variables, word ocupara el valor "palabra1" y definition el valor "definicion1"
+    Autor: Matias '''
     for word, definition in list_of_definitions: 
         if len(word) >= 5: # NOTE Un minimo de 5 letras, de lo contrario no se agrega a dictionary. Ejemplo: yoga, via
             letter = word[0].lower() # Agarramos el primer caracter de la palabra para convertirlo en mayuscula 
@@ -23,6 +22,7 @@ def construction_dictionary_words(list_of_definitions): # NOTE distingue acentos
     return dictionary # Devuelve el dictionary de palabras generado
 
 def mostrar_diccionario(dictionary_words:dict):
+    ###### Dada la estructura del diccionario de la etapa3.  
     for letter in sorted(dictionary_words.keys()): # Itera sobre las letters del dictionary ordenadas alfabeticamente 
         words = sorted([w['word'] for w in dictionary_words[letter]])    
         print(f'Letter {letter.upper()}: {len(words)} words') # En consola, ejemplo: Letter E: 1 words. letter y la cantidad de words que empiezan con la misma 
@@ -96,8 +96,9 @@ def verificador_de_palabra(turno,palabras_del_juego):
 
 # Sebas
 def listar_palabras_de_usuario(tupla,lista_palabras_ingresadas):
-    resultado, palabra= tupla
-    lista_palabras_ingresadas.append(palabra)
+    
+    PALABRA_A_VALIDAR=1
+    lista_palabras_ingresadas.append(tupla[PALABRA_A_VALIDAR])
     return
 
 # Dario
@@ -112,27 +113,14 @@ def confirmar_palabra(palabra_a_confirmar,lista_palabras_ingresadas,palabras_del
 # Sebas
 def verificador_aciertos_errores(tupla_de_veripalabra, cant_aciertos, cant_errores,lista_palabras_ingresadas,palabras_del_juego):
     validez,palabra=(tupla_de_veripalabra)
-    if validez == False:
+    if validez:
         cant_errores+=1
-    elif validez == True:
+    else:
         if confirmar_palabra(palabra,lista_palabras_ingresadas,palabras_del_juego):
             cant_aciertos+=1
         else:
             cant_errores+=1
     return cant_aciertos,cant_errores
-
-# Dario
-def devolver_palabra_de_letra(lista_palabras_ordenadas, letra):
-    respuesta = ''
-    contador = 0
-    i = 0
-    while i < len(lista_palabras_ordenadas) and contador == 0:
-        if lista_palabras_ordenadas[i][0] == letra:
-            respuesta = lista_palabras_ordenadas[i]
-            contador += 1
-        else:
-            i += 1
-    return respuesta
 
 # Dario
 def mostrar_rosco_letras(letras_participantes):
@@ -161,7 +149,7 @@ def resultado_palabra(lista_palabras_ingresadas,letras_participantes:list,palabr
 
 # Etapa 5
 def calcular_puntaje_ronda(cant_aciertos:int,cant_errores:int):
-    """Calcula y devuelve el puntaje de una ronda determinada dados los aciertos y erores cometidos.
+    """Calcula y devuelve el puntaje de una ronda determinada dados los aciertos y errores cometidos.
         Autor:Eduardo
     """
     PUNTOS_ACIERTO=10
@@ -209,12 +197,12 @@ def jugar(letras_participantes,palabras_del_juego:list,definiciones:dict,lista_p
             #if turno != len(lista_palabras_ordenadas):
             x=verificador_de_palabra(turno,palabras_del_juego) #Cambiar variable X
             listar_palabras_de_usuario(x,lista_palabras_ingresadas)
-            verificador_aciertos_errores(x, cant_aciertos, cant_errores,lista_palabras_ingresadas,palabras_del_juego)
+            aciertos, errores=verificador_aciertos_errores(x, cant_aciertos, cant_errores,lista_palabras_ingresadas,palabras_del_juego)
 
         #listar_palabras_ingresadas()
         #print(x)
         turno += 1
-        aciertos, errores = verificador_aciertos_errores(x, cant_aciertos, cant_errores,lista_palabras_ingresadas,palabras_del_juego)
+        #aciertos, errores = verificador_aciertos_errores(x, cant_aciertos, cant_errores,lista_palabras_ingresadas,palabras_del_juego)
         cant_aciertos = aciertos
         cant_errores = errores
     mostrar_resultado_partida(lista_palabras_ingresadas,letras_participantes, palabras_del_juego)
@@ -226,9 +214,7 @@ def jugar(letras_participantes,palabras_del_juego:list,definiciones:dict,lista_p
     cant_aciertos= 0
     cant_errores=0
     
-
     return puntaje
-    
     
     #mostrar_resultado_partida(letras_del_juego,palabras_del_juego)
     #mostrar_puntaje(cant_aciertos,cant_errores):
@@ -252,21 +238,12 @@ def main():
         palabras_del_juego=crear_palabras_del_juego(definiciones,letras_del_juego)#ITEM 3 ETAPA_4
         print(palabras_del_juego)
     #################################################  HASTA ACA, CORRE JOYITA.
-
-        puntaje = jugar(letras_del_juego,palabras_del_juego,definiciones,lista_palabras_ingresadas, puntaje)  #ITEM4 ETAPA 4
-        
+        puntaje = jugar(letras_del_juego,palabras_del_juego,definiciones,lista_palabras_ingresadas, puntaje)  #ITEM4 ETAPA 4   
         continua=input("Desea jugar otra partida? Presione la tecla ""S"", cualquier otra para salir:")
         if continua.lower()=="s":
             sigue_jugando=True
         else:
             sigue_jugando=False
-
-### Sebas y Mati: su mision aca es eliminar las 2 variables globales restantes.
-### O sea: cambiar las funciones de la ETAPA1 para q en lugar de usar las
-### listas de las lineas 1 y 2 (globales) usen las listas "letras_del_juego" y 
-### "palabras_del_juego" recibidas por parametro. La funcion jugar ya esta recibiendo ambas
-### desde el main, asique solo restaria que las distribuyan donde haga falta.
-### Nota: una vez modificada cada funcion, no olviden modificar el llamado desde la funcion "jugar"
 
 main()
 
