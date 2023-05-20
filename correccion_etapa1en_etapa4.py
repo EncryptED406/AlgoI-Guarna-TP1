@@ -1,4 +1,5 @@
 import random
+import doctest
 from datos import obtener_lista_definiciones
 
 #FUNCIONES ETAPA 2
@@ -159,11 +160,27 @@ def pregunta_palabra():
     return palabra
 
 def obtener_longitud_palabra(turno,palabras_del_juego):
+    '''
+    >>> obtener_longitud_palabra(1,['arco','barco','casco','diarco'])
+    5
+    >>> obtener_longitud_palabra(3,['arco','barco','casco','diarco'])
+    6
+    >>> obtener_longitud_palabra(0,['arco','barco','casco','diarco'])
+    4
+    '''
     longitud= len(palabras_del_juego[turno])
     return longitud
     
 # Sebas
 def verificador_de_palabra(turno,palabras_del_juego):
+    '''
+    >>> verificador_de_palabra(5, ['añadir', 'fatal', 'hacinamiento', 'jarabe', 'kevlar', 'mecha', 'sustancia', 'urgir', 'voltear', 'xerografía'])
+        False, 'macha'
+    >>> verificador_de_palabra(9, ['bilirrubina', 'factible', 'hamaca', 'jurar', 'nebulizar', 'oponer', 'quedar', 'windsurf', 'yarará', 'zambullir'])
+        True, 'zambullir'
+    >>> verificador_de_palabra(1, ['bilirrubina', 'factible', 'hamaca', 'jurar', 'nebulizar', 'oponer', 'quedar', 'windsurf', 'yarará', 'zambullir'])
+        True, 'factible'
+    '''
     palabra_a_verificar= pregunta_palabra()
     longitud_de_palabra= obtener_longitud_palabra(turno,palabras_del_juego)
     """la longitud esta medida mediante una funcion que busque la primera palabra
@@ -191,6 +208,17 @@ def listar_palabras_de_usuario(tupla,lista_palabras_ingresadas):
 
 # Dario
 def confirmar_palabra(palabra_a_confirmar,lista_palabras_ingresadas,palabras_del_juego:list):
+    '''
+    >>> confirmar_palabra('arco',['arco'],['arco','barco','casco','diarco'])
+    True
+
+    >>> confirmar_palabra('barco',['arco', 'biblioteca', 'barco'],['arco','barco','casco','diarco'])
+    False
+
+    >>> confirmar_palabra('casa',['arco', 'barco', 'casa'],['arco','barco','casco','diarco'])
+    False
+
+    '''
     posicion= lista_palabras_ingresadas.index(palabra_a_confirmar)
     if palabra_a_confirmar in palabras_del_juego and palabra_a_confirmar == palabras_del_juego[posicion]:
         resultado = True
@@ -200,6 +228,17 @@ def confirmar_palabra(palabra_a_confirmar,lista_palabras_ingresadas,palabras_del
 
 # Sebas
 def verificador_aciertos_errores(tupla_de_veripalabra, cant_aciertos, cant_errores,lista_palabras_ingresadas,palabras_del_juego):
+    '''
+    >>> verificador_aciertos_errores((True, 'arroz'), 0, 0, ['arroz'],['arroz','barco', 'camion'])
+    (1, 0)
+
+    >>> verificador_aciertos_errores((False, 'arco'), 1, 0, ['arroz', 'arco'],['arroz','barco', 'camion'])
+    (1, 1)
+
+    >>> verificador_aciertos_errores((True, 'arroz'), 5, 4, ['arroz'],['arroz','barco', 'camion'])
+    (6, 4)
+
+    '''
     validez,palabra=(tupla_de_veripalabra)
     if validez:
         cant_errores+=1
@@ -212,6 +251,13 @@ def verificador_aciertos_errores(tupla_de_veripalabra, cant_aciertos, cant_error
 
 # Dario
 def mostrar_rosco_letras(letras_participantes):
+    '''
+    >>> mostrar_rosco_letras(['A','B','C'])
+    '[A][B][C]'
+    >>> mostrar_rosco_letras(['D','E','F'])
+    '[D][E][F]'
+
+    '''
     letras=''
     
     for letra in letras_participantes:
@@ -332,7 +378,7 @@ def main():
             sigue_jugando=True
         else:
             sigue_jugando=False
-
+    print(doctest.testmod())
 main()
 
 
