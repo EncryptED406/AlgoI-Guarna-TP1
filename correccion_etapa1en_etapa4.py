@@ -255,7 +255,7 @@ def verificador_aciertos_errores(palabra_x, cant_aciertos, cant_errores,lista_pa
     (6, 4)
 
     '''
-   if confirmar_palabra(palabra_x,lista_palabras_ingresadas,palabras_del_juego):
+    if confirmar_palabra(palabra_x,lista_palabras_ingresadas,palabras_del_juego):
         cant_aciertos+=1
     else:
         cant_errores+=1
