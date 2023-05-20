@@ -159,6 +159,28 @@ def resultado_palabra(lista_palabras_ingresadas,letras_participantes:list,palabr
             resultado += '[ ]'
     return resultado
 
+# Etapa 5
+def calcular_puntaje_ronda(cant_aciertos:int,cant_errores:int):
+    """Calcula y devuelve el puntaje de una ronda determinada dados los aciertos y erores cometidos.
+        Autor:Eduardo
+    """
+    PUNTOS_ACIERTO=10
+    PUNTOS_ERROR=-3
+    puntaje=0
+    puntaje+= PUNTOS_ACIERTO*cant_aciertos+PUNTOS_ERROR*cant_errores
+    return(puntaje)
+
+def mostrar_puntajes(puntaje_anterior,cant_aciertos,cant_errores):
+    """Muestra el puntaje de ronda y el total acumulado dados los aciertos y erores cometidos en la ronda
+    actual.
+        Autor:Eduardo
+    """
+    puntos_ronda=calcular_puntaje_ronda(cant_aciertos,cant_errores)
+    print("Puntaje Final de esta ronda:",puntos_ronda)
+    print("El puntaje total acumulado es:")
+    print(puntaje_anterior+puntos_ronda)
+
+#####
 def turnos(letra, turno,lista_palabras_ordenadas):
     return 'Turno letra '+ letra + ' - Palabra de ' + str(len(lista_palabras_ordenadas[turno])) + ' letras'
 
@@ -171,12 +193,11 @@ def mostrar_resultado_partida(lista_palabras_ingresadas,letras_participantes, li
             print('Turno letra '+ str(letras_participantes[indice]) + ' - Palabra de ' + str(len(lista_palabras_ordenadas[indice])) + ' letras - ' + palabra + ' - error - Palabra Correcta: ' + str(lista_palabras_ordenadas[indice]))
         indice += 1
 
-def jugar(letras_participantes,palabras_del_juego:list,definiciones:dict,lista_palabras_ingresadas):
+def jugar(letras_participantes,palabras_del_juego:list,definiciones:dict,lista_palabras_ingresadas, puntaje):
     turno=0
     cant_aciertos= 0
     cant_errores=0
-    quiere_jugar=True
-
+    lista_palabras_ingresadas = []
     while turno <= len(palabras_del_juego):
         print(mostrar_rosco_letras(letras_participantes))
         print(resultado_palabra(lista_palabras_ingresadas,letras_participantes,palabras_del_juego))
@@ -196,11 +217,21 @@ def jugar(letras_participantes,palabras_del_juego:list,definiciones:dict,lista_p
         aciertos, errores = verificador_aciertos_errores(x, cant_aciertos, cant_errores,lista_palabras_ingresadas,palabras_del_juego)
         cant_aciertos = aciertos
         cant_errores = errores
-        mostrar_resultado_partida(lista_palabras_ingresadas,letras_participantes, palabras_del_juego)
-        print("puntaje final:" )
+    mostrar_resultado_partida(lista_palabras_ingresadas,letras_participantes, palabras_del_juego)
+    mostrar_puntajes(puntaje,cant_aciertos,cant_errores)
+    puntaje+=calcular_puntaje_ronda(cant_aciertos,cant_errores)
+    palabras_del_juego = []
+    letras_participantes = []
+    turno=0
+    cant_aciertos= 0
+    cant_errores=0
     
-        #mostrar_resultado_partida(letras_del_juego,palabras_del_juego)
-        #mostrar_puntaje(cant_aciertos,cant_errores):
+
+    return puntaje
+    
+    
+    #mostrar_resultado_partida(letras_del_juego,palabras_del_juego)
+    #mostrar_puntaje(cant_aciertos,cant_errores):
         
 def main():
     
@@ -208,18 +239,27 @@ def main():
     letras=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w',
                         'x', 'y', 'z']
     lista_palabras_ingresadas = []
+    sigue_jugando=True
+    puntaje = 0
     ####################################################
     lista_definiciones= obtener_lista_definiciones()
     definiciones=construction_dictionary_words(lista_definiciones)  #ITEM1 Etapa2
     #mostrar_diccionario(definiciones) 
     ##################################################
-    letras_del_juego=seleccionar_letras(letras) #ITEM 2 ETAPA_4
-    print(letras_del_juego)
+    while sigue_jugando:
+        letras_del_juego=seleccionar_letras(letras) #ITEM 2 ETAPA_4
     #################################################
-    palabras_del_juego=crear_palabras_del_juego(definiciones,letras_del_juego)#ITEM 3 ETAPA_4
-    print(palabras_del_juego)
+        palabras_del_juego=crear_palabras_del_juego(definiciones,letras_del_juego)#ITEM 3 ETAPA_4
+        print(palabras_del_juego)
     #################################################  HASTA ACA, CORRE JOYITA.
-    jugar(letras_del_juego,palabras_del_juego,definiciones,lista_palabras_ingresadas)  #ITEM4 ETAPA 4
+
+        puntaje = jugar(letras_del_juego,palabras_del_juego,definiciones,lista_palabras_ingresadas, puntaje)  #ITEM4 ETAPA 4
+        
+        continua=input("Desea jugar otra partida? Presione la tecla ""S"", cualquier otra para salir:")
+        if continua.lower()=="s":
+            sigue_jugando=True
+        else:
+            sigue_jugando=False
 
 ### Sebas y Mati: su mision aca es eliminar las 2 variables globales restantes.
 ### O sea: cambiar las funciones de la ETAPA1 para q en lugar de usar las
