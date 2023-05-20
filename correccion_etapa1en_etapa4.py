@@ -22,12 +22,100 @@ def construction_dictionary_words(list_of_definitions): # NOTE distingue acentos
     return dictionary # Devuelve el dictionary de palabras generado
 
 def mostrar_diccionario(dictionary_words:dict):
-    ###### Dada la estructura del diccionario de la etapa3.  
-    for letter in sorted(dictionary_words.keys()): # Itera sobre las letters del dictionary ordenadas alfabeticamente 
-        words = sorted([w['word'] for w in dictionary_words[letter]])    
-        print(f'Letter {letter.upper()}: {len(words)} words') # En consola, ejemplo: Letter E: 1 words. letter y la cantidad de words que empiezan con la misma 
-    total_words = sum([len(dictionary_words[letter]) for letter in dictionary_words])
-    print(f'Total words in the dictionary: {total_words}') # Muestra el total de words en dictionary sumando la cantidad de words por letter
+    ''' 
+    funcion: mostrar_diccionario
+    dictionary_words: diccionario anidado con tres niveles de profundidad
+    letter: Toma el valor de la clave principal (a, b, c hasta la z)
+    level_2: Entra al segundo diccionario anidado. Tomara el valor que le sigue a Letter, y tomaria clave, valor (palabra, definicion)
+    Autor: Matias Gonzalez
+    '''
+    for letter, level_2 in dictionary_words.items():
+        print("Letra:", letter.upper())
+        for word_key, definition_value in level_2.items():
+            print("Palabra:", word_key)
+            print("Definicion:", definition_value)
+            print("---")
+
+dictionary_words = {"a":{
+            "avion":"cosa que vuela"},
+            
+            "b":{
+            "barco":"transporte que se usa para navegar"},
+            
+            "c":{
+            "cebolla":"vegetal que te hace llorar"},
+            
+            "d":{
+            "diestro":"escribe derecho"},
+            
+            "e":{
+            "estrella":"cuerpo celeste que irradia energia"},
+            
+            "f":{
+            "floricienta":"serie vieja"},
+            
+            "g":{
+            "gato":"mascota mas bonita y hermosa"},
+            
+            "h":{
+            "hueco":"agujero pero dicho mas fino"},
+            
+            "i":{
+            "inodoro":"asiento del baño"},
+            
+            "j":{
+            "jirafa":"animal cuello largo"},
+            
+            "k":{
+            "kilo":"unidad de masa"},
+            
+            "l":{
+            "luz":"lo que tira el foquito en el techo"},
+            
+            "m":{
+            "madera":"proviene del arbol"},
+            
+            "n":{
+            "naranja":"fruta o color"},
+            
+            "o":{
+            "opera":"galletitas o lugar donde canta la gente"},
+            
+            "p":{
+            "papa":"progenitor que no es mama"},
+            
+            "q":{
+            "queso":"alimento lacteo que se usa para la pizza"},
+            
+            "r":{
+            "raton":"animalito o persona tacaña"},
+            
+            "s":{
+            "sal":"lo que le pones a la comida para que sea salada"},
+            
+            "t":{
+            "teatro":"lugar donde hay actores"},
+            
+            "u":{
+            "uva":"fruta que se obtiene de los viñedos"},
+            
+            "v":{
+            "vaca":"nos da la leche"},
+            
+            "w":{
+            "waterpolo":"deporte acuatico"},
+            
+            "x":{
+            "xenofobo":"persona que odia extranjeros"},
+            
+            "y":{
+            "yogurt":"alimento lacteo que se obtiene por fermentacion"},
+            
+            "z":{
+            "zodiacal":"un tipo de horoscopo"}}
+
+# Llamada a la función para mostrar el diccionario 
+# mostrar_diccionario(dictionary_words)
 
 #FUNCIONES ETAPA 3
 
@@ -230,7 +318,7 @@ def main():
     ####################################################
     lista_definiciones= obtener_lista_definiciones()
     definiciones=construction_dictionary_words(lista_definiciones)  #ITEM1 Etapa2
-    #mostrar_diccionario(definiciones) 
+    mostrar_diccionario(dictionary_words) 
     ##################################################
     while sigue_jugando:
         letras_del_juego=seleccionar_letras(letras) #ITEM 2 ETAPA_4
