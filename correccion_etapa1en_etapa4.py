@@ -83,6 +83,7 @@ def verificador_de_palabra(turno,palabras_del_juego):
     contador_errores=0
     indice=0
     resultado=False
+    
     validar_palabra=palabra_a_verificar.lower() 
     if len(validar_palabra) == longitud_de_palabra:
         while indice < len(validar_palabra) and contador_errores==0:
@@ -161,6 +162,15 @@ def resultado_palabra(lista_palabras_ingresadas,letras_participantes:list,palabr
 def turnos(letra, turno,lista_palabras_ordenadas):
     return 'Turno letra '+ letra + ' - Palabra de ' + str(len(lista_palabras_ordenadas[turno])) + ' letras'
 
+def mostrar_resultado_partida(lista_palabras_ingresadas,letras_participantes, lista_palabras_ordenadas):
+    indice = 0
+    for palabra in lista_palabras_ingresadas:
+        if palabra == lista_palabras_ordenadas[indice]:
+            print('Turno letra '+ str(letras_participantes[indice]) + ' - Palabra de ' + str(len(lista_palabras_ordenadas[indice])) + ' letras - ' + palabra + ' - acierto')
+        else:
+            print('Turno letra '+ str(letras_participantes[indice]) + ' - Palabra de ' + str(len(lista_palabras_ordenadas[indice])) + ' letras - ' + palabra + ' - error - Palabra Correcta: ' + str(lista_palabras_ordenadas[indice]))
+        indice += 1
+
 def jugar(letras_participantes,palabras_del_juego:list,definiciones:dict,lista_palabras_ingresadas):
     turno=0
     cant_aciertos= 0
@@ -172,12 +182,9 @@ def jugar(letras_participantes,palabras_del_juego:list,definiciones:dict,lista_p
         print(resultado_palabra(lista_palabras_ingresadas,letras_participantes,palabras_del_juego))
         print('Aciertos: '+ str(cant_aciertos))
         print('Errores: '+ str(cant_errores))
-        if turno >= len(palabras_del_juego):
-            print("funcion que rrecorra todo lo que escribiste y lo que deberia ser")
-            print("puntaje final:" )
-        else:
+        if turno != len(palabras_del_juego):
             print(turnos(letras_participantes[turno],turno,palabras_del_juego))
-            print('definicion de palabra')
+            print('Definición: '+ definiciones[letras_participantes[turno]][palabras_del_juego[turno]])
             #if turno != len(lista_palabras_ordenadas):
             x=verificador_de_palabra(turno,palabras_del_juego) #Cambiar variable X
             listar_palabras_de_usuario(x,lista_palabras_ingresadas)
@@ -189,6 +196,8 @@ def jugar(letras_participantes,palabras_del_juego:list,definiciones:dict,lista_p
         aciertos, errores = verificador_aciertos_errores(x, cant_aciertos, cant_errores,lista_palabras_ingresadas,palabras_del_juego)
         cant_aciertos = aciertos
         cant_errores = errores
+        mostrar_resultado_partida(lista_palabras_ingresadas,letras_participantes, palabras_del_juego)
+        print("puntaje final:" )
     
         #mostrar_resultado_partida(letras_del_juego,palabras_del_juego)
         #mostrar_puntaje(cant_aciertos,cant_errores):
