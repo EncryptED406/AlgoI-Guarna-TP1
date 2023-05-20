@@ -154,12 +154,22 @@ def crear_palabras_del_juego (definiciones:dict, letras_participantes:list):
     return (rosco_ordenado)
 
 #FUNCIONES ETAPA 1
-# Sebas
+
 def pregunta_palabra():
+    '''
+    La función pregunta_palabra le pide al usuario que ingrese una palabra
+    y devuelve la palabra para luego utilizarla.
+    AUTOR: Sebastián 
+    '''
     palabra=input("Ingrese palabra: ")
     return palabra
 
 def obtener_longitud_palabra(turno,palabras_del_juego):
+    '''
+    La funcion obtener_longitud_palabra recibe el turno y palabras_del_juego,nos devuelve la longitud
+    de la palabra en la lista de palabras_del_juego en la posicion que se esta jugando(turno)
+    AUTOR:Dario
+    '''
     '''
     >>> obtener_longitud_palabra(1,['arco','barco','casco','diarco'])
     5
@@ -171,8 +181,14 @@ def obtener_longitud_palabra(turno,palabras_del_juego):
     longitud= len(palabras_del_juego[turno])
     return longitud
     
-# Sebas
+
 def verificador_de_palabra(turno,palabras_del_juego):
+    """
+    La funcion verificador_de_palabra recibe el turno y las palabras_del_juego, va a llamar a las funciones
+    pregunta_palabra y obtener_longitud_palabra para luego verificar que la palabra ingresada cumpla con las
+    condiciones necesarias para usarse ,en caso contrario volvera a preguntar hasta devolver la palabra pedida.
+    AUTOR:Sebastián
+    """
     '''
     >>> verificador_de_palabra(5, ['añadir', 'fatal', 'hacinamiento', 'jarabe', 'kevlar', 'mecha', 'sustancia', 'urgir', 'voltear', 'xerografía'])
         False, 'macha'
@@ -181,29 +197,24 @@ def verificador_de_palabra(turno,palabras_del_juego):
     >>> verificador_de_palabra(1, ['bilirrubina', 'factible', 'hamaca', 'jurar', 'nebulizar', 'oponer', 'quedar', 'windsurf', 'yarará', 'zambullir'])
         True, 'factible'
     '''
-    palabra_a_verificar= pregunta_palabra()
+    palabra= pregunta_palabra().lower()
     longitud_de_palabra= obtener_longitud_palabra(turno,palabras_del_juego)
-    """la longitud esta medida mediante una funcion que busque la primera palabra
-       de la lista y le haga el len"""
-    contador_errores=0
-    indice=0
-    resultado=False
-    
-    validar_palabra=palabra_a_verificar.lower() 
-    if len(validar_palabra) == longitud_de_palabra:
-        while indice < len(validar_palabra) and contador_errores==0:
-            if not validar_palabra[indice].isalpha():
-                contador_errores +=1
-            indice +=1
-        if contador_errores==0:
-            resultado=True
-    return resultado,validar_palabra
+    palabra_valida=False
+    while not palabra_valida:
+        if len(palabra) == longitud_de_palabra and palabra.isalpha():
+            palabra_valida=True
+        else:
+            print("Revise la palabra que escribio,la misma no debe contener espacios, caracteres especiales, numeros, y debe tener",longitud_de_palabra,"caracteres")
+            palabra=pregunta_palabra().lower()
+    return palabra
 
-# Sebas
-def listar_palabras_de_usuario(tupla,lista_palabras_ingresadas):
-    
-    PALABRA_A_VALIDAR=1
-    lista_palabras_ingresadas.append(tupla[PALABRA_A_VALIDAR])
+def listar_palabras_de_usuario(palabra_x,lista_palabras_ingresadas):
+    """
+    La funcion listar_palabras_de_usuario recibe una palabra_x que ha sido escrita por el usuario y la
+    guarda en lista_palabras_ingresadas.
+    AUTOR:Sebastián
+    """
+    lista_palabras_ingresadas.append(palabra_x)
     return
 
 # Dario
@@ -226,8 +237,13 @@ def confirmar_palabra(palabra_a_confirmar,lista_palabras_ingresadas,palabras_del
         resultado = False
     return resultado
 
-# Sebas
-def verificador_aciertos_errores(tupla_de_veripalabra, cant_aciertos, cant_errores,lista_palabras_ingresadas,palabras_del_juego):
+def verificador_aciertos_errores(palabra_x, cant_aciertos, cant_errores,lista_palabras_ingresadas,palabras_del_juego):
+    """
+    La funcion verificador_aciertos_errores recibe palabra_x,cant_aciertos, cant_errores,
+    lista_palabras_ingresadas,palabras_del_juego va a llamar a la funcion confirmar_palabra,
+    contara los aciertos y los errores y los devolvera.
+    Autor:Sebastián
+    """
     '''
     >>> verificador_aciertos_errores((True, 'arroz'), 0, 0, ['arroz'],['arroz','barco', 'camion'])
     (1, 0)
@@ -239,14 +255,10 @@ def verificador_aciertos_errores(tupla_de_veripalabra, cant_aciertos, cant_error
     (6, 4)
 
     '''
-    validez,palabra=(tupla_de_veripalabra)
-    if validez:
-        cant_errores+=1
+   if confirmar_palabra(palabra_x,lista_palabras_ingresadas,palabras_del_juego):
+        cant_aciertos+=1
     else:
-        if confirmar_palabra(palabra,lista_palabras_ingresadas,palabras_del_juego):
-            cant_aciertos+=1
-        else:
-            cant_errores+=1
+        cant_errores+=1
     return cant_aciertos,cant_errores
 
 # Dario
@@ -304,6 +316,11 @@ def mostrar_puntajes(puntaje_anterior,cant_aciertos,cant_errores):
 
 #####
 def turnos(letra, turno,lista_palabras_ordenadas):
+    """
+    La funcion turnos recibe letra, turno,lista_palabras_ordenadas para luego imprimir
+    el turno de la letra y cuantas letras tiene la palabra que estamos jugando.
+    Autor:Sebastián
+    """
     return 'Turno letra '+ letra + ' - Palabra de ' + str(len(lista_palabras_ordenadas[turno])) + ' letras'
 
 def mostrar_resultado_partida(lista_palabras_ingresadas,letras_participantes, lista_palabras_ordenadas):
@@ -316,6 +333,11 @@ def mostrar_resultado_partida(lista_palabras_ingresadas,letras_participantes, li
         indice += 1
 
 def jugar(letras_participantes,palabras_del_juego:list,definiciones:dict,lista_palabras_ingresadas, puntaje):
+    """
+    La funcion jugar es el encargado de mostrar por pantalla el tablero,tambien se encarga de manejar el juego
+    interactuando con el usuario y mostrando como avanza la partida
+    Autores:Sebastián y Dario
+    """
     turno=0
     cant_aciertos= 0
     cant_errores=0
@@ -329,14 +351,10 @@ def jugar(letras_participantes,palabras_del_juego:list,definiciones:dict,lista_p
             print(turnos(letras_participantes[turno],turno,palabras_del_juego))
             print('Definición: '+ definiciones[letras_participantes[turno]][palabras_del_juego[turno]])
             #if turno != len(lista_palabras_ordenadas):
-            x=verificador_de_palabra(turno,palabras_del_juego) #Cambiar variable X
-            listar_palabras_de_usuario(x,lista_palabras_ingresadas)
-            aciertos, errores=verificador_aciertos_errores(x, cant_aciertos, cant_errores,lista_palabras_ingresadas,palabras_del_juego)
-
-        #listar_palabras_ingresadas()
-        #print(x)
+            palabra_x=verificador_de_palabra(turno,palabras_del_juego) #Cambiar variable X
+            listar_palabras_de_usuario(palabra_x,lista_palabras_ingresadas)
+            aciertos, errores=verificador_aciertos_errores(palabra_x, cant_aciertos, cant_errores,lista_palabras_ingresadas,palabras_del_juego)
         turno += 1
-        #aciertos, errores = verificador_aciertos_errores(x, cant_aciertos, cant_errores,lista_palabras_ingresadas,palabras_del_juego)
         cant_aciertos = aciertos
         cant_errores = errores
     mostrar_resultado_partida(lista_palabras_ingresadas,letras_participantes, palabras_del_juego)
@@ -349,9 +367,6 @@ def jugar(letras_participantes,palabras_del_juego:list,definiciones:dict,lista_p
     cant_errores=0
     
     return puntaje
-    
-    #mostrar_resultado_partida(letras_del_juego,palabras_del_juego)
-    #mostrar_puntaje(cant_aciertos,cant_errores):
         
 def main():
     
