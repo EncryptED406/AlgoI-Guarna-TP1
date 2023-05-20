@@ -1,6 +1,6 @@
 # lista_palabras_ordenadas= ['arroz', 'boludo','careta','pañal']
 # letras_participantes=['a','b','c','p']
-
+# prueba 
 import random
 from datos import obtener_lista_definiciones
 
