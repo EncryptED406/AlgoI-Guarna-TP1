@@ -142,13 +142,13 @@ def verificador_de_palabra(turno,palabras_del_juego):
             palabra=pregunta_palabra().lower()
     return palabra
 
-def listar_palabras_de_usuario(palabra_x,lista_palabras_ingresadas):
+def listar_palabras_de_usuario(palabra_ingresada,lista_palabras_ingresadas):
     """
-    La funcion listar_palabras_de_usuario recibe una palabra_x que ha sido escrita por el usuario y la
+    La funcion listar_palabras_de_usuario recibe una palabra_ingresada que ha sido escrita por el usuario y la
     guarda en lista_palabras_ingresadas.
     AUTOR:Sebastián
     """
-    lista_palabras_ingresadas.append(palabra_x)
+    lista_palabras_ingresadas.append(palabra_ingresada)
     return
 
 def confirmar_palabra(palabra_a_confirmar,lista_palabras_ingresadas,palabras_del_juego:list):
@@ -294,9 +294,9 @@ def jugar(letras_participantes,palabras_del_juego:list,definiciones:dict,lista_p
         if turno != len(palabras_del_juego):
             print(turnos(letras_participantes[turno],turno,palabras_del_juego))
             print('Definición: '+ definiciones[letras_participantes[turno]][palabras_del_juego[turno]])
-            palabra_x=verificador_de_palabra(turno,palabras_del_juego) 
-            listar_palabras_de_usuario(palabra_x,lista_palabras_ingresadas)
-            aciertos, errores=verificador_aciertos_errores(palabra_x, cant_aciertos, cant_errores,lista_palabras_ingresadas,palabras_del_juego)
+            palabra_ingresada=verificador_de_palabra(turno,palabras_del_juego) 
+            listar_palabras_de_usuario(palabra_ingresada,lista_palabras_ingresadas)
+            aciertos, errores=verificador_aciertos_errores(palabra_ingresada, cant_aciertos, cant_errores,lista_palabras_ingresadas,palabras_del_juego)
         turno += 1
         cant_aciertos = aciertos
         cant_errores = errores
