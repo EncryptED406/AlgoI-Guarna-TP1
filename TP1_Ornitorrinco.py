@@ -176,7 +176,7 @@ def confirmar_palabra(palabra_a_confirmar,lista_palabras_ingresadas,palabras_del
 
 def verificador_aciertos_errores(palabra_ingresada, cant_aciertos, cant_errores,lista_palabras_ingresadas,palabras_del_juego):
     '''    
-    La funcion verificador_aciertos_errores recibe palabra_x,cant_aciertos, cant_errores,
+    La funcion verificador_aciertos_errores recibe palabra_ingresada,cant_aciertos, cant_errores,
     lista_palabras_ingresadas,palabras_del_juego va a llamar a la funcion confirmar_palabra,
     contara los aciertos y los errores y los devolvera.
     Autor:Sebastián
