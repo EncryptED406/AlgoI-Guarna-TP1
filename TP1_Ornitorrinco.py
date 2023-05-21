@@ -13,14 +13,13 @@ def construction_dictionary_words(list_of_definitions):
     En las variables, word ocupara el valor "palabra1" y definition el valor "definicion1"
     Autor: Matias '''
     for word, definition in list_of_definitions: 
-        if len(word) >= 5: # NOTE Un minimo de 5 letras, de lo contrario no se agrega a dictionary. Ejemplo: yoga, via
-            letter = word[0].lower() # Agarramos el primer caracter de la palabra para convertirlo en mayuscula 
+        if len(word) >= 5:
+            letter = word[0].lower() 
             letter_standard = accents.get(letter, letter)
-            if letter_standard not in dictionary: # Comprueba si esa letter no está incluida en el diccionario
-                dictionary[letter_standard] = {} # Lista vacia para adjuntar palabras con esa letra
-            #dictionary[letter_standard].append((word,definition)) # Incluye word y definition a dictionary segun la letra
+            if letter_standard not in dictionary: 
+                dictionary[letter_standard] = {} 
             dictionary[letter_standard][word] = definition
-    return dictionary # Devuelve el dictionary de palabras generado
+    return dictionary 
 
 def mostrar_diccionario(dictionary_words:dict):
     ''' 
@@ -30,93 +29,12 @@ def mostrar_diccionario(dictionary_words:dict):
     level_2: Entra al segundo diccionario anidado. Tomara el valor que le sigue a Letter, y tomaria clave, valor (palabra, definicion)
     Autor: Matias Gonzalez
     '''
-    for letter, level_2 in dictionary_words.items():
-        print("Letra:", letter.upper())
-        for word_key, definition_value in level_2.items():
-            print("Palabra:", word_key)
-            print("Definicion:", definition_value)
-            print("---")
-
-dictionary_words = {"a":{
-            "avion":"cosa que vuela"},
-            
-            "b":{
-            "barco":"transporte que se usa para navegar"},
-            
-            "c":{
-            "cebolla":"vegetal que te hace llorar"},
-            
-            "d":{
-            "diestro":"escribe derecho"},
-            
-            "e":{
-            "estrella":"cuerpo celeste que irradia energia"},
-            
-            "f":{
-            "floricienta":"serie vieja"},
-            
-            "g":{
-            "gato":"mascota mas bonita y hermosa"},
-            
-            "h":{
-            "hueco":"agujero pero dicho mas fino"},
-            
-            "i":{
-            "inodoro":"asiento del baño"},
-            
-            "j":{
-            "jirafa":"animal cuello largo"},
-            
-            "k":{
-            "kilo":"unidad de masa"},
-            
-            "l":{
-            "luz":"lo que tira el foquito en el techo"},
-            
-            "m":{
-            "madera":"proviene del arbol"},
-            
-            "n":{
-            "naranja":"fruta o color"},
-            
-            "o":{
-            "opera":"galletitas o lugar donde canta la gente"},
-            
-            "p":{
-            "papa":"progenitor que no es mama"},
-            
-            "q":{
-            "queso":"alimento lacteo que se usa para la pizza"},
-            
-            "r":{
-            "raton":"animalito o persona tacaña"},
-            
-            "s":{
-            "sal":"lo que le pones a la comida para que sea salada"},
-            
-            "t":{
-            "teatro":"lugar donde hay actores"},
-            
-            "u":{
-            "uva":"fruta que se obtiene de los viñedos"},
-            
-            "v":{
-            "vaca":"nos da la leche"},
-            
-            "w":{
-            "waterpolo":"deporte acuatico"},
-            
-            "x":{
-            "xenofobo":"persona que odia extranjeros"},
-            
-            "y":{
-            "yogurt":"alimento lacteo que se obtiene por fermentacion"},
-            
-            "z":{
-            "zodiacal":"un tipo de horoscopo"}}
-
-# Llamada a la función para mostrar el diccionario 
-# mostrar_diccionario(dictionary_words)
+    total_words = 0
+    for letra in sorted (dictionary_words.keys()):
+        print("La letra", letra, "tiene: ", len(dictionary_words[letra].keys()))
+        total_words += len(dictionary_words[letra].keys())
+        
+    print("Palabras del diccionario: ", total_words)
 
 #FUNCIONES ETAPA 3
 
@@ -256,9 +174,13 @@ def confirmar_palabra(palabra_a_confirmar,lista_palabras_ingresadas,palabras_del
         resultado = False
     return resultado
 
-def verificador_aciertos_errores(palabra_x, cant_aciertos, cant_errores,lista_palabras_ingresadas,palabras_del_juego):
-    '''
-   
+def verificador_aciertos_errores(palabra_ingresada, cant_aciertos, cant_errores,lista_palabras_ingresadas,palabras_del_juego):
+    '''    
+    La funcion verificador_aciertos_errores recibe palabra_x,cant_aciertos, cant_errores,
+    lista_palabras_ingresadas,palabras_del_juego va a llamar a la funcion confirmar_palabra,
+    contara los aciertos y los errores y los devolvera.
+    Autor:Sebastián
+    
     >>> verificador_aciertos_errores('arroz', 0, 0, ['arroz'],['arroz','barco', 'camion'])
     (1, 0)
 
@@ -269,7 +191,7 @@ def verificador_aciertos_errores(palabra_x, cant_aciertos, cant_errores,lista_pa
     (6, 4)
 
     '''
-    if confirmar_palabra(palabra_x,lista_palabras_ingresadas,palabras_del_juego):
+    if confirmar_palabra(palabra_ingresada,lista_palabras_ingresadas,palabras_del_juego):
         cant_aciertos+=1
     else:
         cant_errores+=1
@@ -277,18 +199,17 @@ def verificador_aciertos_errores(palabra_x, cant_aciertos, cant_errores,lista_pa
 
 def mostrar_rosco_letras(letras_participantes):
     '''
-    muestra por pantalla el rosco de las letras participantes
+    Muestra por pantalla el rosco de las letras participantes
     AUTOR: Dario
     >>> mostrar_rosco_letras(['A','B','C'])
     '[A][B][C]'
     >>> mostrar_rosco_letras(['D','E','F'])
     '[D][E][F]'
-
     '''
     letras=''
     
     for letra in letras_participantes:
-        letras += '['+letra+']'
+        letras += '['+letra.upper()+']'
     return letras
 
 def resultado_palabra(lista_palabras_ingresadas,letras_participantes:list,palabras_del_juego:list):
@@ -312,7 +233,8 @@ def resultado_palabra(lista_palabras_ingresadas,letras_participantes:list,palabr
             resultado += '[ ]'
     return resultado
 
-# Etapa 5
+# Funciones Etapa 5
+
 def calcular_puntaje_ronda(cant_aciertos:int,cant_errores:int):
     """Calcula y devuelve el puntaje de una ronda determinada dados los aciertos y errores cometidos.
         Autor:Eduardo
@@ -324,7 +246,7 @@ def calcular_puntaje_ronda(cant_aciertos:int,cant_errores:int):
     return(puntaje)
 
 def mostrar_puntajes(puntaje_anterior,cant_aciertos,cant_errores):
-    """Muestra el puntaje de ronda y el total acumulado dados los aciertos y erores cometidos en la ronda
+    """Muestra el puntaje de ronda y el total acumulado dados los aciertos y errores cometidos en la ronda
     actual.
         Autor:Eduardo
     """
@@ -333,7 +255,6 @@ def mostrar_puntajes(puntaje_anterior,cant_aciertos,cant_errores):
     print("El puntaje total acumulado es:")
     print(puntaje_anterior+puntos_ronda)
 
-#####
 def turnos(letra, turno,lista_palabras_ordenadas):
     """
     La funcion turnos recibe letra, turno,lista_palabras_ordenadas para luego imprimir
@@ -343,6 +264,10 @@ def turnos(letra, turno,lista_palabras_ordenadas):
     return 'Turno letra '+ letra + ' - Palabra de ' + str(len(lista_palabras_ordenadas[turno])) + ' letras'
 
 def mostrar_resultado_partida(lista_palabras_ingresadas,letras_participantes, lista_palabras_ordenadas):
+    """
+    La funcion imprime por pantalla el resultado turno por turno de la ronda que acaba de concluir. 
+    Autores: Luz y Dario
+    """
     indice = 0
     for palabra in lista_palabras_ingresadas:
         if palabra == lista_palabras_ordenadas[indice]:
@@ -369,8 +294,7 @@ def jugar(letras_participantes,palabras_del_juego:list,definiciones:dict,lista_p
         if turno != len(palabras_del_juego):
             print(turnos(letras_participantes[turno],turno,palabras_del_juego))
             print('Definición: '+ definiciones[letras_participantes[turno]][palabras_del_juego[turno]])
-            #if turno != len(lista_palabras_ordenadas):
-            palabra_x=verificador_de_palabra(turno,palabras_del_juego) #Cambiar variable X
+            palabra_x=verificador_de_palabra(turno,palabras_del_juego) 
             listar_palabras_de_usuario(palabra_x,lista_palabras_ingresadas)
             aciertos, errores=verificador_aciertos_errores(palabra_x, cant_aciertos, cant_errores,lista_palabras_ingresadas,palabras_del_juego)
         turno += 1
@@ -389,32 +313,31 @@ def jugar(letras_participantes,palabras_del_juego:list,definiciones:dict,lista_p
         
 def main():
     
+    #DEFINICIONES
     definiciones={}
     letras=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w',
                         'x', 'y', 'z']
     lista_palabras_ingresadas = []
     sigue_jugando=True
     puntaje = 0
-    ####################################################
-    lista_definiciones= obtener_lista_definiciones()
-    definiciones=construction_dictionary_words(lista_definiciones)  #ITEM1 Etapa2
-    mostrar_diccionario(dictionary_words) 
-    ##################################################
+
+    #PREARMADO DEL JUEGO
+    lista_definiciones= obtener_lista_definiciones() 
+    definiciones=construction_dictionary_words(lista_definiciones)
+    mostrar_diccionario(definiciones) 
+    #JUEGO 
     while sigue_jugando:
-        letras_del_juego=seleccionar_letras(letras) #ITEM 2 ETAPA_4
-    #################################################
-        palabras_del_juego=crear_palabras_del_juego(definiciones,letras_del_juego)#ITEM 3 ETAPA_4
+        letras_del_juego=seleccionar_letras(letras) 
+        palabras_del_juego=crear_palabras_del_juego(definiciones,letras_del_juego)
         print(palabras_del_juego)
-    #################################################  HASTA ACA, CORRE JOYITA.
-        puntaje = jugar(letras_del_juego,palabras_del_juego,definiciones,lista_palabras_ingresadas, puntaje)  #ITEM4 ETAPA 4   
+    #POST Ronda(PUNTUACION+nueva partida)
+        puntaje = jugar(letras_del_juego,palabras_del_juego,definiciones,lista_palabras_ingresadas, puntaje)   
         continua=input("Desea jugar otra partida? Presione la tecla ""S"", cualquier otra para salir:")
-        if continua.lower()=="s":
+        acepta_continuar="s"
+        if continua.lower()==acepta_continuar:
             sigue_jugando=True
         else:
             sigue_jugando=False
     print(doctest.testmod())
 
 main()
-
-
-        
