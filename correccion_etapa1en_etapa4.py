@@ -121,6 +121,11 @@ dictionary_words = {"a":{
 #FUNCIONES ETAPA 3
 
 def seleccionar_letras(letras_a_procesar:list):
+    """
+    Obj: Recibe una lista y selecciona X elementos al azar únicos de la misma. La long de la lista debe
+    ser mayor que los X elementos deseados.
+    Autores: Luz y Eduardo 
+    """
     letras_participantes=[]
     ya_salieron=[]
     cant_letras=10
@@ -138,12 +143,21 @@ def seleccionar_letras(letras_a_procesar:list):
     return(letras_participantes_ordenadas)
 
 def conseguir_palabra(definiciones:dict, letra_a_procesar:str):
-
+    """
+    Obj: Recibe el diccionario y una letra, retorna una palabra al azar del 
+    diccionario que empieza con tal letra.
+    Autores:Eduardo y Luz
+    """
     numero=random.randint(0,len(definiciones[letra_a_procesar].keys())-1)
     palabra=(list(definiciones[letra_a_procesar].keys()))[numero]
     return(palabra)
 
 def crear_palabras_del_juego (definiciones:dict, letras_participantes:list):
+    """
+    Obj: Recibe el diccionario y una lista de letras participantes, selecciona una palabra al azar
+    por cada una de tales letras y las retorna ordenadas alfabeticamente.  
+    Autores:Eduardo y Luz
+    """
     palabras_rosco=[]
 
     for letra in letras_participantes:
@@ -168,34 +182,36 @@ def obtener_longitud_palabra(turno,palabras_del_juego):
     '''
     La funcion obtener_longitud_palabra recibe el turno y palabras_del_juego,nos devuelve la longitud
     de la palabra en la lista de palabras_del_juego en la posicion que se esta jugando(turno)
-    AUTOR:Dario
-    '''
-    '''
+    AUTOR: Dario.
+
     >>> obtener_longitud_palabra(1,['arco','barco','casco','diarco'])
     5
+
     >>> obtener_longitud_palabra(3,['arco','barco','casco','diarco'])
     6
+
     >>> obtener_longitud_palabra(0,['arco','barco','casco','diarco'])
     4
+
     '''
     longitud= len(palabras_del_juego[turno])
     return longitud
     
 
 def verificador_de_palabra(turno,palabras_del_juego):
-    """
+    '''
     La funcion verificador_de_palabra recibe el turno y las palabras_del_juego, va a llamar a las funciones
     pregunta_palabra y obtener_longitud_palabra para luego verificar que la palabra ingresada cumpla con las
     condiciones necesarias para usarse ,en caso contrario volvera a preguntar hasta devolver la palabra pedida.
-    AUTOR:Sebastián
-    """
-    '''
+    AUTOR: Sebastián.
+    
     >>> verificador_de_palabra(5, ['añadir', 'fatal', 'hacinamiento', 'jarabe', 'kevlar', 'mecha', 'sustancia', 'urgir', 'voltear', 'xerografía'])
-        False, 'macha'
+    'macha'
     >>> verificador_de_palabra(9, ['bilirrubina', 'factible', 'hamaca', 'jurar', 'nebulizar', 'oponer', 'quedar', 'windsurf', 'yarará', 'zambullir'])
-        True, 'zambullir'
+    'zambullir'
     >>> verificador_de_palabra(1, ['bilirrubina', 'factible', 'hamaca', 'jurar', 'nebulizar', 'oponer', 'quedar', 'windsurf', 'yarará', 'zambullir'])
-        True, 'factible'
+    'factible'
+    
     '''
     palabra= pregunta_palabra().lower()
     longitud_de_palabra= obtener_longitud_palabra(turno,palabras_del_juego)
@@ -217,9 +233,12 @@ def listar_palabras_de_usuario(palabra_x,lista_palabras_ingresadas):
     lista_palabras_ingresadas.append(palabra_x)
     return
 
-# Dario
 def confirmar_palabra(palabra_a_confirmar,lista_palabras_ingresadas,palabras_del_juego:list):
     '''
+    Esta funcion devuelve True o False dependiendo de si la palabra ingresada por el usuario 
+    este en la lista de palabras del juego y a su vez que su posicion sea la correcta.
+    AUTOR: Dario.
+
     >>> confirmar_palabra('arco',['arco'],['arco','barco','casco','diarco'])
     True
 
@@ -238,20 +257,15 @@ def confirmar_palabra(palabra_a_confirmar,lista_palabras_ingresadas,palabras_del
     return resultado
 
 def verificador_aciertos_errores(palabra_x, cant_aciertos, cant_errores,lista_palabras_ingresadas,palabras_del_juego):
-    """
-    La funcion verificador_aciertos_errores recibe palabra_x,cant_aciertos, cant_errores,
-    lista_palabras_ingresadas,palabras_del_juego va a llamar a la funcion confirmar_palabra,
-    contara los aciertos y los errores y los devolvera.
-    Autor:Sebastián
-    """
     '''
-    >>> verificador_aciertos_errores((True, 'arroz'), 0, 0, ['arroz'],['arroz','barco', 'camion'])
+   
+    >>> verificador_aciertos_errores('arroz', 0, 0, ['arroz'],['arroz','barco', 'camion'])
     (1, 0)
 
-    >>> verificador_aciertos_errores((False, 'arco'), 1, 0, ['arroz', 'arco'],['arroz','barco', 'camion'])
+    >>> verificador_aciertos_errores('arco', 1, 0, ['arroz', 'arco'],['arroz','barco', 'camion'])
     (1, 1)
 
-    >>> verificador_aciertos_errores((True, 'arroz'), 5, 4, ['arroz'],['arroz','barco', 'camion'])
+    >>> verificador_aciertos_errores('arroz', 5, 4, ['arroz'],['arroz','barco', 'camion'])
     (6, 4)
 
     '''
@@ -261,9 +275,10 @@ def verificador_aciertos_errores(palabra_x, cant_aciertos, cant_errores,lista_pa
         cant_errores+=1
     return cant_aciertos,cant_errores
 
-# Dario
 def mostrar_rosco_letras(letras_participantes):
     '''
+    muestra por pantalla el rosco de las letras participantes
+    AUTOR: Dario
     >>> mostrar_rosco_letras(['A','B','C'])
     '[A][B][C]'
     >>> mostrar_rosco_letras(['D','E','F'])
@@ -276,8 +291,12 @@ def mostrar_rosco_letras(letras_participantes):
         letras += '['+letra+']'
     return letras
 
-# Dario
 def resultado_palabra(lista_palabras_ingresadas,letras_participantes:list,palabras_del_juego:list):
+    '''
+    Muestra por pantalla [ ] vacios si todavia no se ingreso una palabra, una [e] si la palabra 
+    ingresada es un error o una [a] si es un acierto.
+    AUTOR: Dario.
+    '''
     resultado=''
     if lista_palabras_ingresadas == []:
         for letra in letras_participantes:
@@ -394,6 +413,7 @@ def main():
         else:
             sigue_jugando=False
     print(doctest.testmod())
+
 main()
 
 
