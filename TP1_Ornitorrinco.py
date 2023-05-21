@@ -3,11 +3,11 @@ import doctest
 from datos import obtener_lista_definiciones
 
 #FUNCIONES ETAPA 2
-def construction_dictionary_words(list_of_definitions): # NOTE distingue acentos y la letra ñ
+def construction_dictionary_words(list_of_definitions): 
     ''' Minimo de 5 letras por palabra de lo contrario no selecciona, se muestra por consola el total de palabras que hay por cada letra, 
     y el total que hay en el diccionario.
     Autor: Matias'''
-    dictionary = {} # Para guardar las palabras
+    dictionary = {} 
     accents = {'á': 'a', 'é': 'e', 'í': 'i', 'ó': 'o', 'ú': 'u', 'ñ': 'n'}
     ''' El bucle itera y desempaqueta cada elemento de list_of_definitions. 
     En las variables, word ocupara el valor "palabra1" y definition el valor "definicion1"
