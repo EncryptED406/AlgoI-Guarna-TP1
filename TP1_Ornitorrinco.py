@@ -6,7 +6,7 @@ from datos import obtener_lista_definiciones
 def construction_dictionary_words(list_of_definitions): 
     ''' Minimo de 5 letras por palabra de lo contrario no selecciona, se muestra por consola el total de palabras que hay por cada letra, 
     y el total que hay en el diccionario.
-    Autor: Matias Gonzalez'''
+    Autor: Matias'''
     dictionary = {} 
     accents = {'á': 'a', 'é': 'e', 'í': 'i', 'ó': 'o', 'ú': 'u', 'ñ': 'n'}
     ''' El bucle itera y desempaqueta cada elemento de list_of_definitions. 
@@ -25,7 +25,8 @@ def mostrar_diccionario(dictionary_words:dict):
     ''' 
     funcion: mostrar_diccionario
     dictionary_words: diccionario anidado con tres niveles de profundidad
-    letter: Toma el valor de la clave principal (a, b, c hasta la z)
+    letra: Toma el valor de la clave principal (a, b, c hasta la z)
+    Salida: La letra a tiene: 48, La letra b tiene: 26 etc. Palabras del diccionario: 1394    
     Autor: Matias Gonzalez
     '''
     total_words = 0
